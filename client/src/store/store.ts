@@ -1,8 +1,14 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import { authApi } from "./services/authService";
+import tokenReducer from "./slices/token.slice"; // Убедитесь, что путь к файлу правильный
+
+const rootReducer = combineReducers({
+  [authApi.reducerPath]: authApi.reducer,
+  token: tokenReducer,
+});
 
 export const store = configureStore({
-  reducer: {}, // Здесь должны быть ваши редьюсеры
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware),
 });

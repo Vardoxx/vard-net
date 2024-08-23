@@ -7,6 +7,8 @@ import { RiEyeCloseFill } from "react-icons/ri";
 import { InputType } from "../../types/customInput";
 import { emailRegex } from "../../helpers/regexes/email";
 import { useLoginUserMutation } from "../../store/services/authService";
+import { useDispatch } from "react-redux";
+import { setToken } from "../../store/slices/token.slice";
 
 interface IFormInput {
   email: string;
@@ -14,6 +16,7 @@ interface IFormInput {
 }
 
 const LoginForm = () => {
+  const dispath = useDispatch();
   const [loginUser] = useLoginUserMutation();
   const [showPass, setShowPass] = useState<InputType>("password");
   const {
@@ -34,9 +37,9 @@ const LoginForm = () => {
     if (!isValid) {
       return;
     }
-
     try {
-      await loginUser({ email, password }).unwrap();
+      const { token } = await loginUser({ email, password }).unwrap();
+      dispath(setToken(token));
     } catch (error) {
       console.error(error);
     }
