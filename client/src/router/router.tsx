@@ -1,4 +1,4 @@
-import { createBrowserRouter, NavLink } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 
 import AuthPage from "../pages/Auth-page/AuthPage";
 import "../styles/App.css";
@@ -11,13 +11,12 @@ export const router = createBrowserRouter([
     element: (
       <>
         <AuthPage />
-        <NavLink to="homepage">Home</NavLink>
       </>
     ),
     index: true,
   },
   {
     element: <Layout />,
-    children: [{ path: "homepage", element: <div>Home</div>, index: true }],
+    children: [{ path: "homepage", element: <></>, index: true }],
   },
 ]);
