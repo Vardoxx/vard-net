@@ -5,8 +5,9 @@ import { GiBleedingEye } from "react-icons/gi";
 import { useState } from "react";
 import { RiEyeCloseFill } from "react-icons/ri";
 import { InputType } from "../../types/customInput";
-import registerApi from "../../api/register";
+
 import { emailRegex } from "../../helpers/regexes/email";
+import { useRegisterUserMutation } from "../../store/services/authService";
 
 interface IFormInput {
   email: string;
@@ -15,6 +16,7 @@ interface IFormInput {
 }
 
 const RegistrationForm = () => {
+  const [registerUser] = useRegisterUserMutation();
   const [showPass, setShowPass] = useState<InputType>("password");
   const {
     control,
@@ -30,7 +32,7 @@ const RegistrationForm = () => {
     mode: "onSubmit",
   });
 
-  const onSubmit = (data: IFormInput) => {
+  const onSubmit = async (data: IFormInput) => {
     const email = data.email;
     const password = data.password;
     const repeatPassword = data.repeatPassword;
@@ -41,7 +43,13 @@ const RegistrationForm = () => {
       });
     } else if (!isValid) {
       return;
-    } else registerApi(email, password);
+    } else {
+      try {
+        await registerUser({ email, password }).unwrap();
+      } catch (error) {
+        console.error(error);
+      }
+    }
   };
 
   const handleShowPass = () => {

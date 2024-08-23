@@ -1,5 +1,4 @@
 import { useForm, Controller } from "react-hook-form";
-import loginApi from "../../api/login";
 import CustomInput from "../../ui/CustomInput";
 import CustomBtn from "../../ui/CustomBtn";
 import { GiBleedingEye } from "react-icons/gi";
@@ -7,6 +6,7 @@ import { useState } from "react";
 import { RiEyeCloseFill } from "react-icons/ri";
 import { InputType } from "../../types/customInput";
 import { emailRegex } from "../../helpers/regexes/email";
+import { useLoginUserMutation } from "../../store/services/authService";
 
 interface IFormInput {
   email: string;
@@ -14,6 +14,7 @@ interface IFormInput {
 }
 
 const LoginForm = () => {
+  const [loginUser] = useLoginUserMutation();
   const [showPass, setShowPass] = useState<InputType>("password");
   const {
     control,
@@ -27,13 +28,18 @@ const LoginForm = () => {
     mode: "onSubmit",
   });
 
-  const onSubmit = (data: IFormInput) => {
+  const onSubmit = async (data: IFormInput) => {
     const email = data.email;
     const password = data.password;
     if (!isValid) {
       return;
     }
-    loginApi(email, password);
+
+    try {
+      await loginUser({ email, password }).unwrap();
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const handleShowPass = () => {
