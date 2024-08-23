@@ -1,9 +1,23 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 import LoginForm from "../../modules/Auth/LoginForm";
 import RegistrationForm from "../../modules/Auth/RegistrationForm";
+import { useSelector } from "react-redux";
+import { Token } from "../../types/tokenState";
 
 const AuthPage = () => {
   const [formSwap, setFormSwap] = useState<string>("login");
+  const navigate = useNavigate();
+
+  const suppToken = useSelector((state: Token) => state.token.token);
+  useEffect(() => {
+    const token = Cookies.get("token");
+    console.log("Checking token:", token, suppToken);
+    if (token || suppToken) {
+      return navigate("/homepage");
+    }
+  }, [suppToken, navigate]);
 
   const handleFormSwap = () => {
     if (formSwap === "login") {
