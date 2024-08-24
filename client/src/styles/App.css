@@ -96,3 +96,22 @@
     text-shadow: 2px 3px 0px gray;
   }
 }
+
+.home-page__sider {
+  position: sticky;
+  top: 0px;
+  left: 0px;
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.home-page__news {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 75%;
+  background-color: rgba(128, 128, 128, 0.507);
+  border: 6px solid rgb(36, 36, 36);
+  border-radius: 1rem;
+}

@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import AuthPage from "../pages/Auth-page/AuthPage";
 import "../styles/App.css";
 import Layout from "../components/layout/Layout";
-import NewsPage from "../pages/News-page/PopularPage";
+import NewsPage from "../pages/News-page/NewsPage";
 
 export const router = createBrowserRouter([
   { errorElement: <div className="text-red-600">Poshel naxuy</div> },
