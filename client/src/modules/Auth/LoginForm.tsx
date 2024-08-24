@@ -6,7 +6,7 @@ import { useState } from "react";
 import { RiEyeCloseFill } from "react-icons/ri";
 import { InputType } from "../../types/customInput";
 import { emailRegex } from "../../helpers/regexes/email";
-import { useLoginUserMutation } from "../../store/services/authService";
+import { useLoginUserMutation } from "../../store/services/auth.service";
 import { useDispatch } from "react-redux";
 import { setToken } from "../../store/slices/token.slice";
 
