@@ -13,9 +13,8 @@ const AuthPage = () => {
   const suppToken = useSelector((state: Token) => state.token.token);
   useEffect(() => {
     const token = Cookies.get("token");
-    console.log("Checking token:", token, suppToken);
     if (token || suppToken) {
-      return navigate("/homepage");
+      return navigate("/popular");
     }
   }, [suppToken, navigate]);
 

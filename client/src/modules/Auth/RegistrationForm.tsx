@@ -7,7 +7,7 @@ import { RiEyeCloseFill } from "react-icons/ri";
 import { InputType } from "../../types/customInput";
 
 import { emailRegex } from "../../helpers/regexes/email";
-import { useRegisterUserMutation } from "../../store/services/authService";
+import { useRegisterUserMutation } from "../../store/services/auth.service";
 
 interface IFormInput {
   email: string;

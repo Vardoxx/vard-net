@@ -1,5 +1,5 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import { authApi } from "./services/authService";
+import { authApi } from "./services/auth.service";
 import tokenReducer from "./slices/token.slice"; // Убедитесь, что путь к файлу правильный
 
 const rootReducer = combineReducers({
