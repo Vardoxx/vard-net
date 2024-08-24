@@ -14,7 +14,7 @@ const AuthPage = () => {
   useEffect(() => {
     const token = Cookies.get("token");
     if (token || suppToken) {
-      return navigate("/popular");
+      return navigate("/news");
     }
   }, [suppToken, navigate]);
 

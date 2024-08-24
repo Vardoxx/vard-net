@@ -81,18 +81,18 @@
 
 .layout-actives:first-child {
   &:hover {
-    text-shadow: 2px 3px 0px rgb(255, 102, 0);
+    text-shadow: 2px 3px 0px rgba(255, 214, 138, 0.795);
   }
 }
 
 .layout-actives:nth-child(2) {
   &:hover {
-    text-shadow: 2px 3px 0px rgba(255, 214, 138, 0.795);
+    text-shadow: 2px 3px 0px rgb(255, 102, 0);
   }
 }
 
 .layout-actives:nth-child(3) {
   &:hover {
-    text-shadow: 2px 3px 0px rgba(255, 122, 255, 0.795);
+    text-shadow: 2px 3px 0px gray;
   }
 }
