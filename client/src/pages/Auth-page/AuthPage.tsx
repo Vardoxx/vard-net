@@ -29,7 +29,7 @@ const AuthPage = () => {
   return (
     <div className="wrapper">
       <div className="form-container">
-        <h1 className="glitch text-5xl mb-5">
+        <h1 className="text-5xl mb-5 title-shadow text-gray-200">
           {formSwap === "login" ? "ВХОД" : "РЕГИСТРАЦИЯ"}
         </h1>
         {formSwap === "login" ? <LoginForm /> : <RegistrationForm />}
@@ -37,7 +37,7 @@ const AuthPage = () => {
           {formSwap === "login" ? "Ещё нет аккаунта?" : "Уже есть аккаунт?"}
           <a
             onClick={handleFormSwap}
-            className="cursor-pointer glitch border-b-2 ml-2"
+            className="cursor-pointer border-b-2 border-gray-800 text-black ml-2 font-black "
           >
             {formSwap === "login" ? "Зарегистрироваться" : "Войти"}
           </a>
