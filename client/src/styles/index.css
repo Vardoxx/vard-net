@@ -6,13 +6,15 @@ html,
 body {
   width: 100%;
   height: 100%;
-  background-color: black;
-  color: white;
+  background-image: url(/assets/global-bg.jpg);
+  background-position: center;
+  background-size: cover;
+  color: #808080;
   font-family: "JetBrains Mono", monospace;
 }
 
 .wrapper {
-  max-width: 1200px;
+  max-width: 1300px;
   min-height: 100dvh;
   margin-left: auto;
   margin-right: auto;

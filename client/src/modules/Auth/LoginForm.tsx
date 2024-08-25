@@ -1,9 +1,8 @@
 import { useForm, Controller } from "react-hook-form";
 import CustomInput from "../../ui/CustomInput";
 import CustomBtn from "../../ui/CustomBtn";
-import { GiBleedingEye } from "react-icons/gi";
+import { GiBeastEye, GiEyelashes } from "react-icons/gi";
 import { useState } from "react";
-import { RiEyeCloseFill } from "react-icons/ri";
 import { InputType } from "../../types/customInput";
 import { emailRegex } from "../../helpers/regexes/email";
 import { useLoginUserMutation } from "../../store/services/auth.service";
@@ -55,7 +54,7 @@ const LoginForm = () => {
 
   return (
     <form
-      className="flex flex-col w-6/12 min-h-40 border p-6 rounded-2xl gap-4"
+      className="flex flex-col w-6/12 min-h-40 border-2 border-gray-400 p-6 rounded-2xl gap-4"
       onSubmit={handleSubmit(onSubmit)}
     >
       <div>
@@ -112,9 +111,9 @@ const LoginForm = () => {
           )}
         />
         {showPass === "password" ? (
-          <GiBleedingEye onClick={handleShowPass} className="password-eye" />
+          <GiBeastEye onClick={handleShowPass} className="password-eye" />
         ) : (
-          <RiEyeCloseFill onClick={handleShowPass} className="password-eye" />
+          <GiEyelashes onClick={handleShowPass} className="password-eye" />
         )}
       </div>
 
