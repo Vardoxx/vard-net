@@ -34,7 +34,7 @@
     text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.527);
   }
 }
-.card__teg-container {
+.card__tag-container {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -42,7 +42,7 @@
   width: 100%;
   height: min-content;
 }
-.card-teg {
+.card-tag {
   background-color: #444;
   max-width: 60px;
   padding: 5px;
