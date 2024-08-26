@@ -1,23 +1,28 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface NewsSortState {
-  sortBy: string;
+  sortByTag: string;
+  sortByName: string;
 }
 
 const initialState: NewsSortState = {
-  sortBy: "",
+  sortByTag: "",
+  sortByName: "",
 };
 
 export const sortSlice = createSlice({
   name: "sortNews",
   initialState,
   reducers: {
-    getSortValue: (state, action: PayloadAction<string>) => {
-      state.sortBy = action.payload;
+    sortByTag: (state, action: PayloadAction<string>) => {
+      state.sortByTag = action.payload;
+    },
+    sortByName: (state, action: PayloadAction<string>) => {
+      state.sortByName = action.payload;
     },
   },
 });
 
-export const { getSortValue } = sortSlice.actions;
+export const { sortByTag, sortByName } = sortSlice.actions;
 
 export default sortSlice.reducer;

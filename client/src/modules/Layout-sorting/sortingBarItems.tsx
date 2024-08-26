@@ -1,7 +1,7 @@
 import { FaFireAlt, FaGamepad } from "react-icons/fa";
 import { GiPoliceOfficerHead, GiVrHeadset } from "react-icons/gi";
 
-export const layoutItmes = [
+export const layoutBarItems = [
   {
     id: 1,
     color: "text-orange-500",
@@ -24,7 +24,7 @@ export const layoutItmes = [
     border: "border-orange-300",
     Icon: <GiVrHeadset />,
     title: "Блогеры",
-    sortValue: "bloger",
+    sortValue: "blogers",
   },
   {
     id: 4,
@@ -32,6 +32,6 @@ export const layoutItmes = [
     border: "border-green-500",
     Icon: <FaGamepad />,
     title: "Игры",
-    sortValue: "game",
+    sortValue: "games",
   },
 ];

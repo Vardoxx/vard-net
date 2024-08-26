@@ -1,42 +1,62 @@
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useGetNewsQuery } from "../../store/services/news.service";
 import { RootState } from "../../store/store";
-import { useEffect, useState } from "react";
 import { NewsApi } from "../../types/newsApi";
 
 const NewsCards = () => {
   const { data, error, isLoading } = useGetNewsQuery([]);
-  const [array, setArray] = useState<NewsApi[]>([]);
 
-  const sortBy = useSelector((state: RootState) => state.sortNews.sortBy);
+  const [filteredArray, setFilteredArray] = useState<NewsApi[]>([]);
 
+  const sortByTag = useSelector((state: RootState) => state.sortNews.sortByTag);
+  const sortByName = useSelector(
+    (state: RootState) => state.sortNews.sortByName
+  );
   useEffect(() => {
     if (data && Array.isArray(data)) {
-      const sortedArray = [...data];
+      let arrayToSort = [...data];
 
-      switch (sortBy) {
-        case "":
-          break;
-        case "policy":
-          sortedArray.sort((a, b) =>
-            a.tags.includes("policy") ? -1 : b.tags.includes("policy") ? 1 : 0
-          );
-          break;
-        case "bloger":
-          sortedArray.sort((a, b) =>
-            a.tags.includes("blogers") ? -1 : b.tags.includes("blogers") ? 1 : 0
-          );
-          break;
-        case "game":
-          sortedArray.sort((a, b) =>
-            a.tags.includes("game") ? -1 : b.tags.includes("game") ? 1 : 0
-          );
-          break;
+      if (sortByTag) {
+        switch (sortByTag) {
+          case "policy":
+            arrayToSort.sort((a, b) =>
+              a.tags.includes("политика")
+                ? -1
+                : b.tags.includes("политика")
+                ? 1
+                : 0
+            );
+            break;
+          case "blogers":
+            arrayToSort.sort((a, b) =>
+              a.tags.includes("блогеры")
+                ? -1
+                : b.tags.includes("блогеры")
+                ? 1
+                : 0
+            );
+            break;
+          case "games":
+            arrayToSort.sort((a, b) =>
+              a.tags.includes("игры") ? -1 : b.tags.includes("игры") ? 1 : 0
+            );
+            break;
+        }
       }
 
-      setArray(sortedArray);
+      if (sortByName) {
+        arrayToSort = arrayToSort.filter((i) =>
+          i.description.toLowerCase().includes(sortByName.toLowerCase())
+        );
+        arrayToSort.sort((a, b) =>
+          a.description.toLowerCase().localeCompare(b.description.toLowerCase())
+        );
+      }
+
+      setFilteredArray(arrayToSort);
     }
-  }, [data, sortBy]);
+  }, [data, sortByTag, sortByName]);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
@@ -46,18 +66,18 @@ const NewsCards = () => {
 
   return (
     <>
-      {array.map((i) => (
-        <div key={i.id} className="card">
+      {filteredArray.map((item) => (
+        <div key={item.id} className="card">
           <div className="card__img">
-            <img src={i.img} alt="" />
+            <img src={item.img} alt="" />
           </div>
 
           <div className="card__description">
-            <h1>{i.description}</h1>
+            <h1>{item.description}</h1>
           </div>
 
           <div className="card__tag-container">
-            {i.tags.map((tags) => (
+            {item.tags.map((tags) => (
               <div key={tags} className="card-tag">
                 {tags}
               </div>
