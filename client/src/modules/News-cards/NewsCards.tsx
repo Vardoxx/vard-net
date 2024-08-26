@@ -47,9 +47,9 @@ const NewsCards = () => {
   return (
     <>
       {array.map((i) => (
-        <div onClick={() => console.log(sortBy)} key={i.id} className="card">
+        <div key={i.id} className="card">
           <div className="card__img">
-            <img src={i.src} alt="" />
+            <img src={i.img} alt="" />
           </div>
 
           <div className="card__description">
@@ -57,9 +57,9 @@ const NewsCards = () => {
           </div>
 
           <div className="card__tag-container">
-            {i.tags.map((tag) => (
-              <div key={tag} className="card-tag">
-                {tag}
+            {i.tags.map((tags) => (
+              <div key={tags} className="card-tag">
+                {tags}
               </div>
             ))}
           </div>

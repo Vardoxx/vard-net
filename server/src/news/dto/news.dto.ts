@@ -1,6 +1,8 @@
 export class NewsDto {
-  id: number
-  src: string
+  id?: number
+  img: string
   description: string
   tags: string[]
+  createdAt?: Date
+  updatedAt?: Date
 }

@@ -1,43 +1,25 @@
-import {
-  Controller,
-  Get,
-  // Post,
-  // Body,
-  // Patch,
-  // Param,
-  // Delete,
-} from '@nestjs/common'
+import { Controller, Post, Body, Delete, Get, Param } from '@nestjs/common'
 import { NewsService } from './news.service'
 import { NewsDto } from './dto/news.dto'
-// import { CreateNewsDto } from './dto/create-news.dto'
-// import { UpdateNewsDto } from './dto/update-news.dto'
 
 @Controller('news')
 export class NewsController {
   constructor(private readonly newsService: NewsService) {}
 
-  // @Post()
-  // create(@Body() createNewsDto: CreateNewsDto) {
-  //   return this.newsService.create(createNewsDto);
-  // }
-
-  @Get()
-  findAll(): Promise<NewsDto[]> {
-    return this.newsService.findAll()
+  @Post()
+  async create(@Body() createNewsDto: NewsDto): Promise<NewsDto> {
+    const createdNews = await this.newsService.create(createNewsDto)
+    return createdNews
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.newsService.findOne(+id);
-  // }
+  @Get()
+  async findAll(): Promise<NewsDto[]> {
+    const news = await this.newsService.findAll()
+    return news
+  }
 
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateNewsDto: UpdateNewsDto) {
-  //   return this.newsService.update(+id, updateNewsDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.newsService.remove(+id);
-  // }
+  @Delete(':id')
+  async remove(@Param('id') id: string): Promise<void> {
+    await this.newsService.remove(Number(id))
+  }
 }
