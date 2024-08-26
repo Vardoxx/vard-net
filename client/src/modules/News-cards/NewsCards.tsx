@@ -36,6 +36,11 @@ const NewsCards = () => {
             a.tags.includes("игры") ? -1 : b.tags.includes("игры") ? 1 : 0
           );
           break;
+        case "it":
+          arrayToSort.sort((a, b) =>
+            a.tags.includes("IT") ? -1 : b.tags.includes("IT") ? 1 : 0
+          );
+          break;
       }
     }
 
