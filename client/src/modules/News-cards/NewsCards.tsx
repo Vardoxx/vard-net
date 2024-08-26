@@ -47,7 +47,7 @@ const NewsCards = () => {
   return (
     <>
       {array.map((i) => (
-        <div onClick={() => console.log(sortBy)} key={i.id} className="card">
+        <div key={i.id} className="card">
           <div className="card__img">
             <img src={i.img} alt="" />
           </div>
