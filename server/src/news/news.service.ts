@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { NewsDto } from './dto/news.dto'
 import { News } from './entities/news.entity'
@@ -11,17 +11,27 @@ export class NewsService {
   ) {}
 
   async create(newsDto: NewsDto): Promise<NewsDto> {
+    if (!newsDto.tags || !newsDto.tags.length) {
+      throw new BadRequestException('NewsPost.tag must be at least one tag')
+    }
+
+    if (newsDto.description.length < 50 || newsDto.description.length > 500) {
+      throw new BadRequestException(
+        'NewsPost.description input rules is wrong!',
+      )
+    }
+
     const newPost = await this.newsRepository.save({
       img: newsDto.img,
       description: newsDto.description,
-      tags: newsDto.tags || [], // Добавляем пустой массив, если нет тегов
+      tags: newsDto.tags,
     })
 
     return {
       id: newPost.id,
       img: newPost.img,
       description: newPost.description,
-      tags: newPost.tags, // Возвращаем массив тегов
+      tags: newPost.tags,
       createdAt: newPost.createdAt,
     }
   }
@@ -32,7 +42,7 @@ export class NewsService {
       id: post.id,
       img: post.img,
       description: post.description,
-      tags: post.tags, // Мапим массив тегов
+      tags: post.tags,
       createdAt: post.createdAt,
     }))
   }
