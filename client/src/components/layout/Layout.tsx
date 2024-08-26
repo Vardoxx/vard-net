@@ -1,8 +1,11 @@
 import Cookies from "js-cookie";
 import { Navigate, NavLink, Outlet } from "react-router-dom";
 import { layoutItmes } from "./layout-items";
+import { useDispatch } from "react-redux";
+import { getSortValue } from "../../store/slices/sort.slice";
 
 const Layout = () => {
+  const dispatch = useDispatch();
   const token = Cookies.get("token");
 
   const logOut = async () => {
@@ -15,12 +18,17 @@ const Layout = () => {
     return <Navigate to="/" replace />;
   }
 
+  const handleSortChange = (sortValue: string) => {
+    dispatch(getSortValue(sortValue));
+  };
+
   return (
     <>
       <header className="flex items-center justify-center w-full min-h-20 sticky top-0 left-0 bg-white shadow-md shadow-black z-50">
         <nav className="flex items-center justify-between h-full w-10/12 text-bl">
           {layoutItmes.map((i) => (
             <div
+              onClick={() => handleSortChange(i.sortValue)}
               key={i.id}
               className={`flex cursor-pointer items-center border-2 gap-2 p-2 rounded-lg ${i.border} transition-all hover:scale-105 active:bg-gray-300`}
             >

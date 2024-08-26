@@ -8,6 +8,7 @@ export const layoutItmes = [
     border: "border-orange-500",
     Icon: <FaFireAlt />,
     title: "Популярное",
+    sortValue: "popular",
   },
   {
     id: 2,
@@ -15,6 +16,7 @@ export const layoutItmes = [
     border: "border-blue-500",
     Icon: <GiPoliceOfficerHead />,
     title: "Политика",
+    sortValue: "policy",
   },
   {
     id: 3,
@@ -22,6 +24,7 @@ export const layoutItmes = [
     border: "border-orange-300",
     Icon: <GiVrHeadset />,
     title: "Блогеры",
+    sortValue: "bloger",
   },
   {
     id: 4,
@@ -29,5 +32,6 @@ export const layoutItmes = [
     border: "border-green-500",
     Icon: <FaGamepad />,
     title: "Игры",
+    sortValue: "game",
   },
 ];

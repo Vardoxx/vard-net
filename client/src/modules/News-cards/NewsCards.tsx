@@ -1,8 +1,14 @@
+import { useSelector } from "react-redux";
 import { useGetNewsQuery } from "../../store/services/news.service";
 
+import { RootState } from "../../store/store";
+
 const NewsCards = () => {
+  const sortBy = useSelector((state: RootState) => state.sortNews.sortBy);
+
+  console.log("Current sort value:", sortBy);
+
   const { data, error, isLoading } = useGetNewsQuery([]);
-  console.log(data);
 
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error</div>;
@@ -14,7 +20,7 @@ const NewsCards = () => {
   return (
     <>
       {data.map((i) => (
-        <div key={i.id} className="card">
+        <div onClick={() => console.log(sortBy)} key={i.id} className="card">
           <div className="card__img">
             <img src={i.src} alt="" />
           </div>
