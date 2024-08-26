@@ -1,46 +1,43 @@
 import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
 import { NewsDto } from './dto/news.dto'
+import { News } from './entities/news.entity'
+import { Repository } from 'typeorm'
 
 @Injectable()
 export class NewsService {
-  private newsList: NewsDto[] = []
+  constructor(
+    @InjectRepository(News) private readonly newsRepository: Repository<News>,
+  ) {}
 
-  constructor() {
-    this.newsList = [
-      {
-        id: 1,
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3NMLvURzAhu3YoEw4ulaG0OEDyhawqwcEiw&s',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        tags: ['blogers'],
-      },
-      {
-        id: 2,
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBCbAaHSD5GW3L0J1Y1RuG8u-XjkO5eTROjA&s',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        tags: ['policy'],
-      },
-      {
-        id: 3,
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRQ1688U5qT69NA5r7WjzmJee6OGnGO89jBg&s',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        tags: ['game'],
-      },
-      {
-        id: 4,
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdfrT8Vjk9QJrwwSwwBUzizJ2vPTiZ9Y6lcA&s',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        tags: ['policy', 'blogers'],
-      },
-      {
-        id: 5,
-        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGYxm30lxbrfH5IFWd3OB96rf4e3Uxv5clcQ&s',
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-        tags: ['policy', 'game'],
-      },
-    ]
+  async create(newsDto: NewsDto): Promise<NewsDto> {
+    const newPost = await this.newsRepository.save({
+      img: newsDto.img,
+      description: newsDto.description,
+      tags: newsDto.tags || [], // Добавляем пустой массив, если нет тегов
+    })
+
+    return {
+      id: newPost.id,
+      img: newPost.img,
+      description: newPost.description,
+      tags: newPost.tags, // Возвращаем массив тегов
+      createdAt: newPost.createdAt,
+    }
   }
 
-  findAll(): Promise<NewsDto[]> {
-    return Promise.resolve(this.newsList)
+  async findAll(): Promise<NewsDto[]> {
+    const posts = await this.newsRepository.find()
+    return posts.map((post) => ({
+      id: post.id,
+      img: post.img,
+      description: post.description,
+      tags: post.tags, // Мапим массив тегов
+      createdAt: post.createdAt,
+    }))
+  }
+
+  async remove(id: number): Promise<void> {
+    await this.newsRepository.delete({ id })
   }
 }

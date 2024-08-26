@@ -1,6 +1,7 @@
 export interface NewsApi {
   id: number;
-  src: string;
+  img: string;
   description: string;
   tags: string[];
+  createdAt: Date;
 }
