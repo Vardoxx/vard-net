@@ -5,12 +5,6 @@ import LayoutSortingBar from "../../modules/Layout-sorting/LayoutSortingBar";
 const Layout = () => {
   const token = Cookies.get("token");
 
-  const logOut = async () => {
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    Cookies.remove("token");
-    window.location.href = "/";
-  };
-
   if (!token) {
     return <Navigate to="/" replace />;
   }
@@ -21,7 +15,7 @@ const Layout = () => {
         <nav className="flex items-center justify-between h-full w-10/12 text-bl">
           <LayoutSortingBar />
 
-          <NavLink to="/profile" onClick={logOut}>
+          <NavLink to="/profile">
             <div className="max-w-14">
               <img
                 style={{ borderRadius: "50%" }}

@@ -4,13 +4,14 @@ import Cookies from "js-cookie";
 import LoginForm from "../../modules/Auth/LoginForm";
 import RegistrationForm from "../../modules/Auth/RegistrationForm";
 import { useSelector } from "react-redux";
-import { Token } from "../../types/tokenState";
+
+import { RootState } from "../../store/store";
 
 const AuthPage = () => {
   const [formSwap, setFormSwap] = useState<string>("login");
   const navigate = useNavigate();
 
-  const suppToken = useSelector((state: Token) => state.token.token);
+  const suppToken = useSelector((state: RootState) => state.getApiValues.token);
   useEffect(() => {
     const token = Cookies.get("token");
     if (token || suppToken) {

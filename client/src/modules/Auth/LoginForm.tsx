@@ -7,7 +7,12 @@ import { InputType } from "../../types/customInput";
 import { emailRegex } from "../../helpers/regexes/email";
 import { useLoginUserMutation } from "../../store/services/auth.service";
 import { useDispatch } from "react-redux";
-import { setToken } from "../../store/slices/token.slice";
+import {
+  setEmail,
+  setRole,
+  setToken,
+  setUserName,
+} from "../../store/slices/auth.slice";
 
 interface IFormInput {
   email: string;
@@ -37,8 +42,14 @@ const LoginForm = () => {
       return;
     }
     try {
-      const { token } = await loginUser({ email, password }).unwrap();
+      const { token, userName, role } = await loginUser({
+        email,
+        password,
+      }).unwrap();
       dispath(setToken(token));
+      dispath(setEmail(email));
+      dispath(setUserName(userName));
+      dispath(setRole(role));
     } catch (error) {
       console.error(error);
     }

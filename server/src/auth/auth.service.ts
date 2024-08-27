@@ -14,13 +14,18 @@ export class AuthService {
   async validateUser(email: string, password: string) {
     const user = await this.userService.findOne(email)
 
-    const passwordIsMatch = await argon2.verify(user.password, password)
-    if (user && passwordIsMatch) {
-      return user
+    if (!user) {
+      throw new UnauthorizedException('Email or password not found')
     }
 
-    throw new UnauthorizedException('Email or Password incorrect')
+    const passwordIsMatch = await argon2.verify(user.password, password)
+    if (!passwordIsMatch) {
+      throw new UnauthorizedException('Email or password not found')
+    }
+
+    return user
   }
+
   async login(user: IUser) {
     const { id, email, userName, role } = user
     return {
@@ -31,8 +36,7 @@ export class AuthService {
       token: this.jwtService.sign({
         id: user.id,
         email: user.email,
-        userName: user.userName,
-        role: user.role,
+        userName: userName,
       }),
     }
   }

@@ -13,8 +13,11 @@ export interface LoginRequare {
   password: string;
 }
 
-type Role = "user" | "admin";
 export interface LoginResponce {
+  id: string;
+  email: string;
   userName: string;
-  role: Role;
+  role: string;
+  token: string;
+  user: string;
 }

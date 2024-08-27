@@ -4,6 +4,7 @@ import AuthPage from "../pages/Auth-page/AuthPage";
 import "../styles/App.css";
 import Layout from "../components/layout/Layout";
 import NewsPage from "../pages/News-page/NewsPage";
+import ProfilePage from "../pages/Profile-page/ProfilePage";
 
 export const router = createBrowserRouter([
   { errorElement: <div className="text-red-600">Poshel naxuy</div> },
@@ -20,8 +21,7 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "news", element: <NewsPage />, index: true },
-      { path: "debates", element: <div>Debates</div>, index: true },
-      { path: "profile", element: <div>Profile</div>, index: true },
+      { path: "profile", element: <ProfilePage />, index: true },
     ],
   },
 ]);
