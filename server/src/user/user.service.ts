@@ -14,16 +14,30 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const existUser = await this.userRepository.findOne({
+    const existEmail = await this.userRepository.findOne({
       where: {
         email: createUserDto.email,
       },
     })
-    if (existUser) throw new BadRequestException('Email already exist')
+    const existUserName = await this.userRepository.findOne({
+      where: {
+        userName: createUserDto.userName,
+      },
+    })
+    if (existEmail)
+      throw new BadRequestException(
+        `Email: "${createUserDto.email}" already exist`,
+      )
+    if (existUserName)
+      throw new BadRequestException(
+        `UserName: "${createUserDto.userName}" already exist`,
+      )
 
     const user = await this.userRepository.save({
       email: createUserDto.email,
       password: await argon2.hash(createUserDto.password),
+      userName: createUserDto.userName,
+      role: 'user',
     })
     const token = this.jwtService.sign({ email: createUserDto.email })
 

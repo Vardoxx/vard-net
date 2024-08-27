@@ -11,6 +11,7 @@ interface IFormInput {
   email: string;
   password: string;
   repeatPassword: string;
+  userName: string;
 }
 
 const RegistrationForm = () => {
@@ -26,6 +27,7 @@ const RegistrationForm = () => {
       email: "",
       password: "",
       repeatPassword: "",
+      userName: "",
     },
     mode: "onSubmit",
   });
@@ -34,6 +36,7 @@ const RegistrationForm = () => {
     const email = data.email;
     const password = data.password;
     const repeatPassword = data.repeatPassword;
+    const userName = data.userName;
 
     if (password !== repeatPassword) {
       setError("repeatPassword", {
@@ -43,7 +46,7 @@ const RegistrationForm = () => {
       return;
     } else {
       try {
-        await registerUser({ email, password }).unwrap();
+        await registerUser({ email, password, userName }).unwrap();
       } catch (error) {
         console.error(error);
       }
@@ -63,6 +66,36 @@ const RegistrationForm = () => {
       className="flex flex-col w-6/12 min-h-40 border-2 border-gray-400 p-6 rounded-2xl gap-4"
       onSubmit={handleSubmit(onSubmit)}
     >
+      <div>
+        <div className="min-h-6">
+          {errors.userName && (
+            <p className="text-red-600">{errors.userName.message}</p>
+          )}
+        </div>
+        <Controller
+          name="userName"
+          control={control}
+          rules={{
+            required: "Поле обязательно!",
+            minLength: {
+              value: 6,
+              message: "Минимальнок кол-во символов: 6!",
+            },
+            maxLength: {
+              value: 255,
+              message: "Превышено максимальное кол-во символов: 255!",
+            },
+          }}
+          render={({ field }) => (
+            <CustomInput
+              {...field}
+              placeholder="Имя"
+              type="text"
+              dirty={errors.userName === undefined ? "none" : "2px solid red"}
+            />
+          )}
+        />
+      </div>
       <div>
         <div className="min-h-6">
           {errors.email && (

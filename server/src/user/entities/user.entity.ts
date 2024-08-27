@@ -17,6 +17,12 @@ export class User {
   @Column()
   password: string
 
+  @Column()
+  userName: string
+
+  @Column()
+  role: string
+
   @CreateDateColumn()
   createdAt: Date
 

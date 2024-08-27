@@ -22,11 +22,18 @@ export class AuthService {
     throw new UnauthorizedException('Email or Password incorrect')
   }
   async login(user: IUser) {
-    const { id, email } = user
+    const { id, email, userName, role } = user
     return {
       id,
       email,
-      token: this.jwtService.sign({ id: user.id, email: user.email }),
+      userName,
+      role,
+      token: this.jwtService.sign({
+        id: user.id,
+        email: user.email,
+        userName: user.userName,
+        role: user.role,
+      }),
     }
   }
 }
