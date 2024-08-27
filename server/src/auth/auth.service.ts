@@ -11,29 +11,43 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(email: string, password: string) {
-    const user = await this.userService.findOne(email)
+  async validateUser(email: string, password: string): Promise<IUser | null> {
+    try {
+      const user = await this.userService.findOne(email)
 
-    const passwordIsMatch = await argon2.verify(user.password, password)
-    if (user && passwordIsMatch) {
+      if (!user) {
+        throw new UnauthorizedException('User not found')
+      }
+
+      const passwordIsMatch = await argon2.verify(user.password, password)
+
+      if (!passwordIsMatch) {
+        throw new UnauthorizedException('Incorrect password')
+      }
+
       return user
+    } catch (error) {
+      console.error('Authentication error:', error)
+      throw new UnauthorizedException('Invalid credentials')
     }
-
-    throw new UnauthorizedException('Email or Password incorrect')
   }
-  async login(user: IUser) {
-    const { id, email, userName, role } = user
-    return {
-      id,
-      email,
-      userName,
-      role,
-      token: this.jwtService.sign({
-        id: user.id,
-        email: user.email,
-        userName: user.userName,
-        role: user.role,
-      }),
+
+  async login(
+    user: IUser,
+  ): Promise<{ token: string; user: Omit<IUser, 'password'> }> {
+    try {
+      const { id, email, userName, role } = user
+      const payload = {
+        id,
+        email,
+        userName,
+        role,
+      }
+      const token = this.jwtService.sign(payload)
+      return { token, user: { id, email, userName, role } }
+    } catch (error) {
+      console.error('Login error:', error)
+      throw new UnauthorizedException('Failed to generate token')
     }
   }
 }
