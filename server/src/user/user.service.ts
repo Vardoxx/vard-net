@@ -44,6 +44,10 @@ export class UserService {
     return { user, token }
   }
 
+  async findAll(): Promise<User[]> {
+    return await this.userRepository.find()
+  }
+
   async findOne(email: string) {
     return await this.userRepository.findOne({ where: { email: email } })
   }
