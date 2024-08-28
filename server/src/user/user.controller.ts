@@ -5,6 +5,8 @@ import {
   UsePipes,
   ValidationPipe,
   Get,
+  Delete,
+  Param,
 } from '@nestjs/common'
 import { UserService } from './user.service'
 import { CreateUserDto } from './dto/create-user.dto'
@@ -22,5 +24,10 @@ export class UserController {
   @Get()
   findAll() {
     return this.userService.findAll()
+  }
+
+  @Delete(':id')
+  remove(@Param('id') id: number) {
+    return this.userService.remove(id)
   }
 }

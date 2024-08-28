@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
 import { InjectRepository } from '@nestjs/typeorm'
 import { User } from './entities/user.entity'
@@ -48,7 +52,22 @@ export class UserService {
     return await this.userRepository.find()
   }
 
-  async findOne(email: string) {
-    return await this.userRepository.findOne({ where: { email: email } })
+  async remove(id: number): Promise<void> {
+    try {
+      const deletedCount = await this.userRepository.delete(id)
+      if (!deletedCount) {
+        throw new NotFoundException(`Пользователь с ID ${id} не найден`)
+      }
+    } catch (error) {
+      throw new Error(
+        `Ошибка при удалении пользователя с ID ${id}: ${error.message}`,
+      )
+    }
+  }
+
+  async findOne(email: string): Promise<User | null> {
+    return (
+      (await this.userRepository.findOne({ where: { email: email } })) || null
+    )
   }
 }
