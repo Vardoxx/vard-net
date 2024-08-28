@@ -4,6 +4,7 @@ import {
   LoginResponce,
   RegisterRequare,
   RegisterResponce,
+  UserResponse,
 } from "../../types/authApi";
 
 export const authApi = createApi({
@@ -24,7 +25,24 @@ export const authApi = createApi({
         body: credentials,
       }),
     }),
+    getAllUsers: builder.query<UserResponse[], unknown>({
+      query: () => ({
+        url: "/user",
+        method: "GET",
+      }),
+    }),
+    deleteUser: builder.mutation<void, number>({
+      query: (id) => ({
+        url: `/user/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useRegisterUserMutation, useLoginUserMutation } = authApi;
+export const {
+  useRegisterUserMutation,
+  useLoginUserMutation,
+  useGetAllUsersQuery,
+  useDeleteUserMutation,
+} = authApi;

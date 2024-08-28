@@ -21,3 +21,13 @@ export interface LoginResponce {
   token: string;
   user: string;
 }
+
+export interface UserResponse {
+  id: number;
+  email: string;
+  password: string;
+  userName: string;
+  role: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

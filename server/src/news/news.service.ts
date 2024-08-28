@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { NewsDto } from './dto/news.dto'
 import { News } from './entities/news.entity'
@@ -28,7 +32,6 @@ export class NewsService {
     })
 
     return {
-      id: newPost.id,
       img: newPost.img,
       description: newPost.description,
       tags: newPost.tags,
@@ -48,6 +51,9 @@ export class NewsService {
   }
 
   async remove(id: number): Promise<void> {
-    await this.newsRepository.delete({ id })
+    const deletedCount = await this.newsRepository.delete(id)
+    if (!deletedCount) {
+      throw new NotFoundException(`New with ID ${id} not found`)
+    }
   }
 }

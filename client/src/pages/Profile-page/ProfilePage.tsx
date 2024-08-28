@@ -1,9 +1,11 @@
 import Cookies from "js-cookie";
+import { NavLink } from "react-router-dom";
 
 const ProfilePage = () => {
   const userName = Cookies.get("userName");
   const email = Cookies.get("email");
   const role = Cookies.get("role");
+  const token = Cookies.get("token");
 
   const logOut = async () => {
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -20,13 +22,18 @@ const ProfilePage = () => {
           alt="ava"
         />
       </div>
-      <ul className="flex flex-col gap-3">
+      <ul className="flex flex-col gap-5">
         <li>Имя: {userName}</li>
         <li>Почта: {email}</li>
         <li>Роль: {role}</li>
         <li>
           {role === "admin" ? (
-            <button className="btn">Create Post</button>
+            <NavLink
+              to={`/admin/${userName}${token}`}
+              className="btn bg-blue-400"
+            >
+              Перейти к панели админа!
+            </NavLink>
           ) : null}
         </li>
         <li>
