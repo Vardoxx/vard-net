@@ -53,15 +53,9 @@ export class UserService {
   }
 
   async remove(id: number): Promise<void> {
-    try {
-      const deletedCount = await this.userRepository.delete(id)
-      if (!deletedCount) {
-        throw new NotFoundException(`Пользователь с ID ${id} не найден`)
-      }
-    } catch (error) {
-      throw new Error(
-        `Ошибка при удалении пользователя с ID ${id}: ${error.message}`,
-      )
+    const deletedCount = await this.userRepository.delete(id)
+    if (!deletedCount) {
+      throw new NotFoundException(`User with ID: ${id} not found`)
     }
   }
 

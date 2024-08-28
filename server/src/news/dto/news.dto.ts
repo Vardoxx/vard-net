@@ -1,15 +1,6 @@
-import {
-  IsArray,
-  IsNumber,
-  IsString,
-  MinLength,
-  MaxLength,
-} from 'class-validator'
+import { IsArray, IsString, MinLength, MaxLength } from 'class-validator'
 
 export class NewsDto {
-  @IsNumber()
-  id?: number
-
   @IsString()
   img: string
 

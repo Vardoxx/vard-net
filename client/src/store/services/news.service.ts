@@ -11,7 +11,13 @@ export const newsApi = createApi({
         method: "GET",
       }),
     }),
+    deleteNew: builder.mutation<NewsApi[], { id: number }>({
+      query: ({ id }) => ({
+        url: `news/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
-export const { useGetNewsQuery } = newsApi;
+export const { useGetNewsQuery, useDeleteNewMutation } = newsApi;

@@ -1,12 +1,13 @@
 import { memo, useState } from "react";
 import UsersList from "../../modules/Admin/UsersList";
+import NewsList from "../../modules/Admin/NewsList";
 
 const AdminPage = () => {
   const [selectCtg, setSelectCtg] = useState<string>("usersList");
 
   const Selecter = memo(() => {
     if (selectCtg === "usersList") return <UsersList />;
-    if (selectCtg === "newsList") return <div>Xuy</div>;
+    if (selectCtg === "newsList") return <NewsList />;
   });
 
   return (
