@@ -11,7 +11,7 @@ const adminName = Cookies.get("userName");
 const token = Cookies.get("token");
 
 export const router = createBrowserRouter([
-  { errorElement: <div className="text-red-600">Poshel naxuy</div> },
+  { errorElement: <div className="text-red-600">Not Found</div> },
   {
     path: "/",
     element: <AuthPage />,
